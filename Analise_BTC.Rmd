@@ -1,0 +1,546 @@
+---
+title: "Uma análise do Bitcoin: suas relações com os mercados americano e brasileiro e seus impactos na economia"
+author: "Bruna Aparecida Santos, Diogo David Sánchez Lima e Moisés Ferreira Gonçalves"
+date: "14/06/2021"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+
+## 1.Introdução
+
+O Bitcoin surgiu como consequência da desconfiança no sistema financeiro tradicional.
+Após a crise do subprime em 2008, caracterizada pelo colapso do sistema financeiro dos Estados Unidos em virtude de políticas de crédito altamente arriscadas e questionáveis,essa desconfiança sofreu uma elevação. É questionado que a ideia e o planejamento da criação do Bitcoin tenha um íncio anterior a crise, mas a proposta só foi lançada no final de 2008.Através de um documentário técnico chamado de Whitepaper um anônimo criptógrafo Satoshi Nakamoto propõe um sistema financeiro descentralizado e a base de tecnologia, o Bitcoin.
+
+O Bitcoin é apresentado como a primeira moeda digital criptografada independente de intermediários e criada matematicamente através de computadores denominados mineradores. Outra característica importante do Bitcoin é ser uma moeda não inflacionária, dado que se tem um limite de 21 milhões de unidades no mundo, ou seja, sua oferta é limitada.
+No fim de 2009 a New Liberty Standard publicou a primeira taxa de câmbio desta criptomoeda: US$1 valiam 1.309,03 BTC.Neste primeiro ano de exisência, a moeda foi restrita a um pequeno grupo de mineradores e programadores.
+
+Em 2010 o Bitcoin passou a ter valor real de compra, fato que ocorreu devido ao episódio das 2 pizzas que foram pagas pelo preço de 10 mil Bitcoins.Ainda neste mesmo ano se tem a fundação da corretora Mt.Gox no Japão, esta chegou a movimentar 70% de de todas as transações em BTC no mundo. Mas a corretora fechou as portas em 2014. Em novembro deste mesmo ano o valor de mercado do Bitcoin ultrapassou US$1 milhão pela primeira vez.
+Desde então o BTC aumentou sua popularidade e o ideal de moedas descentralizadas e criptografadas,nos últimos anos tem sido notável a evolução desta moeda e seus impactos no sistema fincaneiro mundial, atualmente já foram minerados 19,051,437.5 Bitcoins.
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+##Repositório usado com base em : "https://stackoverflow.com/questions/8475102/set-default-cran-mirror-permanent-in-r"
+install.packages("readxl",repos = "http://cran.us.r-project.org")
+
+
+library(readxl)
+## Leitura diretamente do Excel
+dados <- read.csv2("BTC-USD.xls")
+dados_limpos<- data.frame(dados$Date, dados$Valor)
+
+##Gráfico a seguir feito com base em : "https://livro.curso-r.com/8-1-o-pacote-ggplot2.html#gr%C3%A1ficos-de-linhas"
+op <- par(mar = c(3, 4, 4, 4))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, , echo=FALSE}
+
+##O gráfico a seguir mostra o histórico de preços do BTC, dados retirados do yahoo finance (link da base de dados está presente na bibliografia)
+plot(dados_limpos$dados.Valor, type = "l",
+     lty = 3,
+     ylim = c(2000, 60000),
+     lwd = 1.4,
+     xaxt = "n",
+     ylab = "Preço BTC USD", xlab = "Fonte: Yahoo Finance")
+
+axis(side = 1,
+     at = c(0,839,1204,1569,1934,2296), 
+     label = c(2014,2017,2018,2019,2020,2021))
+
+
+```
+
+  Analisando o gráfico é possível notar que historicamente, a criptomoeda já teve comportamentos através de ciclos de valorização e desvalorização. 
+  
+  A razão por trás desses ciclos varia de acordo com diversos fatores, mas essencialmente pelo fator principal que rege a economia: a oferta e a demanda. E quando este fator é relacionado ao BTC se tem uma ferramenta instríseca que faz com que a cada quatro anos a produção seja reduzida pela metade, o processo ocorre até que todos os Bitcoins tenham sido minerados, é o denominado Halving.
+  
+  Ciclos de valorização e desvalorização são características de todos os ativos, mas a proposta principal do projeto é entender como o BTC impacta os eventos e como é impactado por eles.
+
+
+## 2.O Bitcoin no Brasil
+
+A história do Bitcoin no Brasil começou 1 ano depois do episódio das pizzas. Em 2011 surgiu a primeira exchange de Bitcoin no Brasil, a Mercado Bitcoin, em operação até os dias de hoje. No ano seguinte com o surgimento de uma comunidade de entusiastas no país já foi possível a negociação através de corretoras e na forma peer-to-peer.
+
+Nos anos seguintes com a chegada do primeiro caixa eletrônico de Bitcoin no país, o início da operação de novas corretoras e com a supervalorização do Bitcoin no Brasil e no mundo no final de 2017, a quantidade de pessoas cadastradas em corretoras de criptomoedas explodiu, chegando na casa dos 1,5 milhão,valor que corresponde ao dobro do número de pessoas físicas na bolsa de valores B3 que possuia aproximadamente 620 mil cadastros.
+
+Para que a ánalise do BTC seja adaptada no cenário brasileiro, é necessário levar em consideração um fator importante: a variação do real em relação ao dólar.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, , include=FALSE}
+## Leitura da conversão USD/BRL
+## Leitura diretamente do Excel
+dados_dois <- read.csv2("BRL=X.xls")
+dados_limpos_dois<- data.frame(dados_dois$Date, dados_dois$USD)
+op <- par(mar = c(3, 4, 4, 4))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+##O gráfico a seguir mostra o histórico de relação do real e dólar, dados retirados do yahoo finance (base de dados disponível na bibliografia)
+plot(dados_limpos_dois$dados_dois.USD, type = "l",
+     lty = 3,
+     xlim=c(1,1720),
+     ylim = c(0, 10),
+     lwd = 1.4,
+     xaxt = "n",
+     ylab = "USD/BRL", xlab = "Fonte: Yahoo Finance")
+
+axis(side = 1,
+     at = c(2,339,600,858,1119,1359,1621), 
+     label = c(2014,2016,2017,2018,2019,2020,2021))
+`````  
+
+Em decorrência da pandemia do COVID-19 que se iniciou em 2020, os ciclos e variações se tornaram mais extremos. A moeda Real teve sua maior desvalorização em 14 de maio de 2020, quando 1USD =5,89BRL, o valor aproximado apareceu novamente em 9 de março de 2021 com 1USD= 5,87BRL.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+##Vou analisar as correlações entre as variáveis dos 2 gráficos apresentados,ou seja, a relação entre o BTC e a valorização/desvalorização da moeda real. Para isso, vou agrupar os 2 dados em um data.frame.
+
+library(dplyr)
+colnames(dados_limpos)[1]<-"Date"
+colnames(dados_limpos_dois)[1]<-"Date"
+
+##Como existem datas que possuem dados relacionados somente a uma variável,vou filtrar o data.frame com as informações somente das mesmas datas.
+
+dados_agrupados<- merge(dados_limpos, dados_limpos_dois)
+
+
+colnames(dados_agrupados)[2]<-"BTC USD"
+colnames(dados_agrupados)[3]<-"BRL"
+
+
+##Alterando o formato das dados relacionados aos anos
+library(lubridate)
+dados_aux<- data.frame(dados_agrupados$Date)
+colnames(dados_aux)[1]<-"Ano"
+dados_aux$Ano<- as.Date(dados_aux$Ano,format = '%d/%m/%Y')
+
+dados_aux$Ano<-year(dados_aux$Ano)
+
+##Agora substituindo os anos filtrados no data.frame com os dados das variáveis 
+dados_a2<-dados_agrupados
+colnames(dados_a2)[1]<-"Ano"
+dados_a2$Ano<- dados_aux$Ano
+dados_a3<- dados_a2
+colnames(dados_a3)[1]<-"Ano"
+
+##Agrupoando os dados de acordo com o ano:
+
+dados_2014<- filter(dados_a3, Ano== 2014)
+dados_2015<-filter(dados_a3, Ano== 2015)
+dados_2016<-filter(dados_a3, Ano== 2016)
+dados_2017<-filter(dados_a3, Ano== 2017)
+dados_2018<-filter(dados_a3, Ano== 2018)
+dados_2019<-filter(dados_a3, Ano== 2019)
+dados_2020<-filter(dados_a3, Ano== 2020)
+dados_2021<-filter(dados_a3, Ano== 2021)
+
+##Renomeando as colunas de cada ano
+colnames(dados_2014)[2]<-"BTC USD"
+colnames(dados_2014)[3]<-"BRL"
+
+colnames(dados_2015)[2]<-"BTC USD"
+colnames(dados_2015)[3]<-"BRL"
+
+colnames(dados_2016)[2]<-"BTC USD"
+colnames(dados_2016)[3]<-"BRL"
+
+colnames(dados_2017)[2]<-"BTC USD"
+colnames(dados_2017)[3]<-"BRL"
+
+colnames(dados_2018)[2]<-"BTC USD"
+colnames(dados_2018)[3]<-"BRL"
+
+colnames(dados_2019)[2]<-"BTC USD"
+colnames(dados_2019)[3]<-"BRL"
+
+colnames(dados_2020)[2]<-"BTC USD"
+colnames(dados_2020)[3]<-"BRL"
+
+colnames(dados_2021)[2]<-"BTC USD"
+colnames(dados_2021)[3]<-"BRL"
+
+##Calculando a correlação em cada ano
+c14<- cor(dados_2014[,-1])
+c15<- cor(dados_2015[,-1])
+c16<- cor(dados_2016[,-1])
+c17<- cor(dados_2017[,-1])
+c18<- cor(dados_2018[,-1])
+c19<- cor(dados_2019[,-1])
+c20<- cor(dados_2020[,-1])
+c21<- cor(dados_2021[,-1])
+
+##Montando a tabela de correlações
+tabela_BRL<-matrix(nrow=8,ncol = 1)
+tabela_BRL[1:8,1]<-c(c14[2,1],c15[2,1],c16[2,1],c17[2,1],c18[2,1],c19[2,1],c20[2,1],c21[2,1])
+tabela_BRL<-as.table(tabela_BRL)
+colnames(tabela_BRL)[1]<-""
+rownames(tabela_BRL)[1:8]<-c(2014,2015,2016,2017,2018,2019,2020,2021)
+
+
+
+```
+
+
+```{r message=FALSE, warning=FALSE, , message=FALSE}
+knitr::kable(tabela_BRL, caption = "Correlações do Real com BTC")
+```
+
+Todo o cenário de 2020 foi marcado por um periodo pandemia, especificamente no ínicio quando páises aderiram o lockdown e a economia mundial foi marcada por uma crise.Juntamente com o maior recorde de desvalorização do real, o Bitcoin também atingiu seu menor preço em 12 de março de 2020 por 4.970,79 USD.
+
+Esse choque inicial de pandemia auxilia no entendimento da correlação baixa de 0,21 de 2020 entre a moeda Real e o preço do BTC, pois ainda que o Real estivesse desvalorizado e o intuito racional fosse buscar segurança em ativos internacionais, o restante do mundo também estava em crise e sem percepção de comportamentos futuros. Segundo o mais recente relatório do Departamento de Assuntos Económicos e Sociais da ONU – World Economic Situation and Prospects – em 2020, a economia mundial recuou 4,3%, uma queda duas vezes e meia superior à registada durante a crise financeira de 2009.Estima-se que as economias desenvolvidas recuaram 5,6 por cento, devido às paralisações económicas resultantes da pandemia. Já os países em desenvolvimento registaram uma contração menos severa de 2,5 por cento, de acordo com as estimativas apresentadas no relatório. 
+
+Já em 2021 a correlação entre os dados se demonstra considerável.Segundo relatório divulgado em 13 de abril pela Organização para Cooperação e Desenvolvimento Econômico (OECD),enquanto o Brasil se manteve na última posição nos meses de fevereiro e março como a única grande economia do mundo em desaceleração, os Estados Unidos apresentam uma boa recuperação com atualmente 37,9% de sua população completamente vacinada e fortes incentivos ficais e monetários. Os efeitos dessa estimativa positiva relacionada ao crescimentos dos Estados Unidos impacta diretamente o dólar. E esta moeda diferentemente do que  aconteceu o ínicio da pandemia em 2020, agora ela passa a ser vista como medida de proteção contra novas crises e o cenário econômico brasileiro.
+
+Segundo levantamento do Cointrader Monitor que utilizou dados coletados das 32  principais plataformas nacionais e plataformas estrangeiras que atuam no Brasil, estas foram responsáveis pela movimentação de 27.280,79 Bitcoins de 1 a 31/03/2021 , o equivalente a aproximadamente R$ 8.523.005.473,45 (8,5 Bi).
+
+
+
+
+
+## 3. Google Trends e as Criptomoedas
+
+ O Google Trends é a plataforma onde fica disponibilizado o volume de pesquisas que são realizados no Google que é atualmente a maior plataforma de pesquisas disponivel no mundo. Partindo da premissa de que potenciais investidores de um ativo fariam uma pesquisa sobre tal investimento, é compreensivel que caso a demanda de um ativo aumente provavelmente as suas pesquisas também aumentem e a paritr disso podemos buscar um nivel de correlação entre o preço dos ativos e o volume de pesquisa, já que ambas as variaveis citadas são crescentes com a demanda. Utilizando dados disponibilizados no site do Google Trends e com a série historica de preços do Bitcoin e Ethereum disponibilizada pelo Investing.com, criando uma matriz de correlação com dados desde 2012 chegamos na matriz abaixo
+
+
+```{r setup, include=FALSE}
+
+
+library(BatchGetSymbols)
+library(tidyverse)
+library(dplyr)
+library(corrplot)
+library(readxl)
+## Leitura diretamente do Excel
+dados_10 <- read.table("BTC_ETH_USD.csv", header = TRUE,
+                         sep = ";", dec = ",")
+
+collrrigido <- colnames(dados_10) #A coluna Data aparece como "..í.Data", vamos arrumar isso.
+collrrigido[1] <- "Data"
+names(dados_10) <- collrrigido #arrumado
+
+dados_20 <- read.table("Pesquisas.csv", header = TRUE,
+                         sep = ";", dec = ",") #aqui estão os dados disponibilizados pelo GT (GOOGLE TRENDS)
+
+dados_limpos0 <- merge(dados_10,dados_20, by = "Data") #vamos usar juntar os dados de Preço e Pesquisa
+
+
+op <- par(mar = c(3, 4, 4, 4))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r , echo=FALSE}
+##Vamos criar uma matriz de correlação
+
+M1 <- cor(dados_limpos0[2:6])
+
+
+corrplot(M1, type = "upper" , method = "number" , tl.col="black", tl.cex=0.8)
+
+
+
+```
+
+Observando a matriz de correlação acima percebemos que existe uma forte correlação entre criptomoedas e volume de pesquisa sobre o assunto, agora plotando um gráfico com o nivel de correlação do Bitcoin com o volume de pesquisas sobre o assunto em periodos de 8 meses, entre os anos de 2013 e 2020 é visivel de que a correlação no curto prazo não é tão grande, no entanto ela tende a se manter positiva e acima de 0,5 salvo algumas exceções.
+
+```{r , echo=FALSE}
+
+
+corgt <- c()  #Esse vai ser o nosso eixo Y onde está o nivel de correlação do BTC ao longo do tempo
+eixox0 <- c(as.Date(dados_limpos0[1,1])) #O eixo X era para ser vazio e ir adicionando valores no loop a seguir, mas para evitar problemas com a classe dos valores no vector eu fiz isso
+
+for(j in 1:14){
+  eixox0 <- c(eixox0, as.Date(dados_limpos0[(j*8+4),1],format = '%Y-%m-%d') ) } #Loop onde eu adiciono as dadas de 8 em 8
+
+eixox0 <- eixox0[2:15] #agora eu vou tirar aquele primeiro termo que eu tinha adicionado lá atrás
+
+s <- 1
+
+while(s < 15){
+  corgt <- c(corgt,
+           cor(as.vector(dados_limpos0$BTC.USD)[(s*8):(s*8+10)],
+              as.vector(dados_limpos0$Bitcoin.GT)[(s*8):(s*8+10)]))
+  s <- 1+s
+                             }
+plotagem1 <- na.omit(data.frame(corr_GT_BTC = corgt, Data=eixox0)) # vamos remover os NA
+
+ggplot(data = plotagem1, aes(x = Data, y =corr_GT_BTC)) + geom_line()
+
+
+```
+
+## 4. Criptomoedas e o Mercado Financeiro
+
+No mercado financeiro, quando um setor da economia esta crescendo isso acaba refletindo positivamente no preço de ativos relacionados aquele determinado setor, pensando nisso pesquisamos as principais ETF (Exchange-traded fund) negociadas nas bolsas de New York e buscamos a série historica de preços utilizando o package BatchGetSymbols que realizou pesquisas no Yahoo Finances, já a série de preços das criptomoedas estão disponibilizadas no site Investing.com., plotamos a seguinte matriz de correlação utilizando dados desde 2012 até janeiro de 2021.
+
+```{r matrizcorl, echo=FALSE, message=FALSE, warning=FALSE}
+##BAIXAR ALGUNS DOS PRINCIPAIS ETF NA NYSE
+
+stockdates <- (BatchGetSymbols(tickers = c("spy","qqq","itb","gdx","fdn","iwm","xlu"), first.date = "2012-03-01", last.date = "2021-12-01", freq.data = "daily" , how.to.aggregate = "last"))$df.tickers
+
+#vamos utilizar a média OHLC4 para precificar cada ETF mensalmente e transformar a data em string, para poder usar o merge mais pra frente
+
+stockdates_ok <- stockdates %>% mutate( precos = price.high/4 + price.low/4 + price.open/4 + price.close/4, Data= substring(ref.date,1,11)) 
+                                                                                  
+                                                                                  
+
+stockdates_limpo <- data.frame(ticker = stockdates_ok$ticker, precos = (stockdates_ok$precos), Data = stockdates_ok$Data)
+
+
+spydates <- filter(stockdates_limpo, ticker == "spy") %>% rename(SPY = precos)
+spydates$ticker = NULL
+
+qqqdates <- filter(stockdates_limpo, ticker == "qqq") %>% rename(QQQ = precos)
+qqqdates$ticker = NULL
+
+itbdates <- filter(stockdates_limpo, ticker == "itb") %>% rename(ITB = precos)
+itbdates$ticker = NULL
+
+iwmdates <- filter(stockdates_limpo, ticker == "iwm") %>% rename(IWM = precos)
+iwmdates$ticker = NULL
+
+xludates <- filter(stockdates_limpo, ticker == "xlu") %>% rename(XLU = precos)
+xludates$ticker = NULL
+
+gdxdates <- filter(stockdates_limpo, ticker == "gdx") %>% rename(GDX = precos)
+gdxdates$ticker = NULL
+
+fdndates <- filter(stockdates_limpo, ticker == "fdn") %>% rename(FDN = precos)
+fdndates$ticker = NULL
+
+#Agora vamos unir tudo usando a merge()
+
+
+tudo <- merge(spydates,qqqdates)
+tudo <- merge(tudo, itbdates)
+tudo <- merge(tudo, iwmdates)
+tudo <- merge(tudo, xludates)
+tudo <- merge(tudo, fdndates)
+tudo <- merge(tudo, gdxdates)
+#Agora vamos adicionar os dados do bitcoin ;)
+criptos <- read.table("CriptosPrice.csv", header = TRUE,
+                         sep = ";", dec = ",")
+
+collrrigido2 <- colnames(criptos)
+collrrigido2[1] <- "Data"
+names(criptos) <- collrrigido2
+
+tudo <- merge(tudo,criptos)
+
+#Vamos criar uma matriz de correlação
+
+correlacao2 <- cor(tudo[1:2332,2:13], method = "pearson")
+corrplot(correlacao2 , method = "square", tl.col="black", tl.cex=0.7) #aqui está a nossa plotagem
+
+
+
+
+```
+Observando essa nova matriz de de correlação podemos perceber que as ETF's escolhidas possuem forte correlação entre elas próprias, com exceção a GDX que é do mercado de ouro.
+As ETF's escolhidas foram: GDX, XLU, SPY, QQQ, ITB, IWM e FDN que são do mercado de ouro, serviços, S&P500, Nasdaq100, construção, Russel 2000 e tecnologia respectivamente. 
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+##Correlação dados
+gergracor = function(df=tudo,x=2,y=8){ #Vou gerar essa função que: cria um datafram com as correlações em periodos de aproximadamente 53 dias uteis, dado duas colunas do  d.frame(tudo)
+
+spyxbtc <- data.frame(Data=as.vector(df[1]), SPY = as.vector(df[x]),BTC= as.vector(df[y])) #essa daqui é a limpeza do dataframe para trabalharmos apenas com o que precisamos
+eixoy <- c() #vector vazio
+eixox <- c(as.Date(spyxbtc[1,1])) #esse vector não pode ser vazio para não ter problema com o tipo dele depois
+
+for(j in 1:45){ # vou usar um loop para preencher as colunas das datas aos poucos
+  eixox <- c(eixox, as.Date(spyxbtc[(j*53+20),1],format = '%Y-%m-%d') ) }
+
+s <- 1
+while(s < 46){ # vou usar o while pq quando eu usei o for in eu tive alguns problemas, a ideia aqui é calcular a correlação em periodos de 53 dias
+  eixoy <- c(eixoy,
+           cor(as.vector(df[x])[(s*53):(s*53+53),1],
+              as.vector(df[y])[(s*53):(s*53+53),1]))
+  s <- 1+s
+                             }
+
+return (data.frame(EixoX=eixox[2:45],colnome=eixoy[1:44]))
+}
+
+btcspy <- (gergracor(tudo,2,8))
+names(btcspy) <- c("Data","Correlação_SPY_BTC") #renomear as colunas da melhor maneira
+
+ggplot(data = btcspy, aes(x = Data, y = Correlação_SPY_BTC)) + geom_line()
+
+
+```
+Embora na matriz de correlaçao o mercado de ações e o mercado de criptomoedas aparentarem ter uma correlação positiva no longo prazo, no curto prazo isso nem sempre acontece, o gráfico acima foi plotado utilizando periodos em torno de 50 dias uteis entre o periodo do primeiro trimestre de 2012 e o segundo trimestre de 2021, comparando o mercado de criptomoedas com uma ETF que replica o S&P500 mostrando que nem sempre movimentações de alta ou baixa no mercado financeiro representam algum impacto no mercado de criptos no curto prazo
+
+```{r btc_eth, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+##Correlação dados
+
+ethbtc <- (gergracor(tudo,9,10))
+names(ethbtc) <- c("Data","Correlação_ETH_BTC")
+ggplot(data = ethbtc[30:42,1:2], aes(x = Data, y = Correlação_ETH_BTC)) + geom_line()
+
+
+op <- par(mar = c(3, 4, 4, 4))
+knitr::opts_chunk$set(echo = TRUE)
+```
+Agora diferente de antes vemos um gráfico de correlação positiva entre o Bitcoin e o Ethereum ao decorrer do tempos, ambas criptomoedas, percebemos aqui que elas possuem correlação positiva e com uma média acima de 0.5 na maior parte do tempo 
+
+```{r spy_fdn, echo=FALSE, paged.print=TRUE}
+##Correlação dados
+
+spyfdn <- (gergracor(tudo,2,7))
+names(spyfdn) <- c("Data","Correlação_SPY_FDN")
+ggplot(data = spyfdn, aes(x = Data, y =Correlação_SPY_FDN)) + geom_line()
+
+
+op <- par(mar = c(3, 4, 4, 4))
+knitr::opts_chunk$set(echo = TRUE)
+```
+No gráfico acima temos a correlação entre duas ETF's do mercado norte americano, uma tenta replicar o indice S&P500 e a outra investe em ações do mercado de tecnologia, nesse caso também temos uma correlação positiva entre ambas e com uma média relativamente alta, com exceção ao ano de 2016.
+
+```{r spy_gdx, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+##Correlação dados
+
+spygdx <- (gergracor(tudo,2,8))
+names(spygdx) <- c("Data","Correlação_SPY_GTX")
+ggplot(data = spygdx, aes(x = Data, y =Correlação_SPY_GTX)) + geom_line()
+
+
+
+```
+Agora temos a correlação de uma ETF que replica o S&P500 com uma ETF que investe no mercado de ouro, aqui vemos que a correlação entre os dois mercados no curto prazo tende a variar muito
+
+```{r btc_gdx, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+##Correlação dados
+
+btcgdx <- (gergracor(tudo,8,7))
+names(btcgdx) <- c("Data","Correlação_BTC_GTX")
+ggplot(data = btcgdx, aes(x = Data, y =Correlação_BTC_GTX)) + geom_line()
+
+
+```
+Aqui temos a correlação do Bitcoin com a GTX, ETF que investe no mercado de ouro, aqui percebemos que a correlação varia muito assim como no gráfico anterior.
+
+
+
+## 5. Correlação entre criptomoedas: Diversificar faz sentido?
+ Aqui examinaremos a correlação entre criptomoedas e o por que a noção de diversificação nesse mundo não se mostra muito eficaz.
+ 
+
+  Ao fazer algumas comparações com dados de 03/10/2017 (primeiro dado de preço da moeda cardano) a 27/02/2021 vemos uma correlação extremamente forte entre elas e o Bitcoin, e consequentemente entre si mesmas.
+  
+
+```{r g, echo=FALSE, message=FALSE, warning=FALSE,include=FALSE, paged.print=TRUE}
+install.packages("Hmisc",repos = "http://cran.us.r-project.org") #Biblioteca para analizar correlação
+
+install.packages("PerformanceAnalytics",repos = "http://cran.us.r-project.org") #Biblioteca para analizar correlação
+
+library(Hmisc)
+
+library(PerformanceAnalytics)
+
+ETH_sujo=read.table("coin_Ethereum.csv", header = TRUE, sep = ",", dec = ".") #importando base de dados da criptomoeda, pegando o cabeçalho, separando por "," e decimais por "."
+
+BTC_sujo=read.table("coin_Bitcoin.csv", header = TRUE, sep = ",", dec = ".")
+
+ADA_sujo=read.table("coin_Cardano.csv", header = TRUE, sep = ",", dec = ".")
+
+LTC_sujo=read.table("coin_Litecoin.csv", header = TRUE, sep = ",", dec = ".")
+
+
+#BTC_sujo$Date = ymd_hms(BTC_sujo$Date) #pra trabalhar com datas pensei em trabalhar com essa função mas deu pra trabalhar com a string
+#ETH_sujo$Date = ymd_hms(ETH_sujo$Date)
+#ADA_sujo$Date = ymd_hms(ADA_sujo$Date)
+#LTC_sujo$Date = ymd_hms(LTC_sujo$Date)
+
+
+BTC = BTC_sujo[BTC_sujo$Date > ADA_sujo$Date[1],] #Aquitrocamos a coluna de cada cripto para ter somente os valores relativos a primeira data da ADA para termos o maior número possivel de valaores para avaliação
+ETH = ETH_sujo[ETH_sujo$Date > ADA_sujo$Date[1],]
+ADA = ADA_sujo[ADA_sujo$Date > ADA_sujo$Date[1],]
+LTC = LTC_sujo[LTC_sujo$Date > ADA_sujo$Date[1],]
+
+df_crip=data.frame("BTC"=BTC$Close, "ETH"=ETH$Close, "ADA"=ADA$Close, "LTC"=LTC$Close)#Criando um data frame com os preços de cada moeda
+
+
+
+#correlacao_criptos = cor(df_crip) #fazendo a correlação
+
+#ggplot() + geom_line(data = BTC, aes(x = Date, y =Close, group=1)) + geom_line(data=ETH,aes(x = Date, y =Close, group=2), color="blue")
+```
+
+```{r g5, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+#corrplot::corrplot(correlacao_criptos) #Plotando a correlação
+#knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r g2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+correlacao_criptos2 = Hmisc::rcorr(as.matrix(df_crip)) #Dividindo o data frame nas três matrizes a seguir
+
+#correlacao_criptos2$r #matriz de coeficiente de correlação
+
+#correlacao_criptos2$P #matriz de valor p
+
+#correlacao_criptos2$n #matriz de quantidade de valores comparados
+
+corrplot(correlacao_criptos2$r, p.mat=correlacao_criptos2$P, sig.level=0.005) # O plot usa a matriz de coeficiente de correlação como base de dados e e verifica com a matriz de valores p quais são maiores que sig.level para que as correlações cujo valor p seja maior que 0.005 apareçam com um x (só que nenhuma se enquadra nesse caso).
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quando o coeficiente de correlação se encontra entre 0.7 e 1.0 está indicando uma forte correlação, ou seja quando o valor de uma sobe o valor da outra tende a subir e vice versa.
+
+```{r g1, echo=FALSE, message=TRUE, warning=TRUE, paged.print=TRUE}
+df_crip=data.frame("BTC"=BTC$Close, "ETH"=ETH$Close, "ADA"=ADA$Close, "LTC"=LTC$Close) #repeti a df_crip pois estava dando erro
+PerformanceAnalytics::chart.Correlation(df_crip)
+```
+Números do lado superior direito são os respectivos coefientes de correlação
+
+Três asteriscos significa p valor<=0.001, dois significa 0.001< p valor <=0.01, um significa 0.01 < p valor <= 0.05 e sem asterisco caso p valor > 0.05
+
+Os gráficos da diagonal principal apresenta o quantidade de vezes que cada cripto ficou com determinado valor, o que nos mostra que os valores altos delas apareceram muito recentemente.
+
+Os gráficos do lado inferior esquerdo apresentam a linha de tendencia dos preços das criptos
+
+## 6 O que isso tudo significa?
+  O Bitcoin possui como uma das principais características positivas a descentralização direta e não ser inflacionária, mas seria esta moeda indiretamente afetada por estes aspectos? Ainda que a considerável valorização do Bitcoin em 2021 tenha ocorrido por diversos fatores, é considerável acreditar que sua expansão no Brasil tenha tido como um desses motivos câmbio da moeda Real e o cenário da economia brasileira. 
+  
+   Utilizando os dados históricos, foi perceptível de que o volume de pesquisas fornecidos pelo Google Trends pode ser utilizado como forte indicador de preços das criptomoedas e que não há muitos ativos no mercado financeiro em termos de setor, que tenham forte correlação com criptomoedas, ou seja, alternar entre ações da bolsa de valores e criptomoedas é muito recomendado para quem deseja diversificação
+ 
+  Os datos são interessantes, mas isso são apenas indicações do passado. Esse mercado ainda é muito volátil, e não existe garantia que os padrões vão se repetir no proximo ano, mês ou um dia.
+  As considerações finais são que diversificar o portifólio de criptomoedas para mitigar o risco é um mito. Como as matrizes de correlação  tem mostrado não é nem um pouco menos arriscado ter outras moedas especialmente já que que Bitcoin tende a jogar todo o mercado pra baixo.
+  
+### 7.Bibliografia 
+
+* [Base de dados Bitcoin USD](https://finance.yahoo.com/quote/BTC-USD?p=BTC-USD&.tsrc=fin-srch)
+
+* [Base de dados conversão USD/BRL](https://finance.yahoo.com/quote/BRL%3DX/history?period1=1410912000&period2=1621209600&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true)
+
+* [Crise do Subprime](https://www.suno.com.br/artigos/crise-do-subprime/)
+
+* [World Economic Situation and Prospects (ONU)](https://www.un.org/development/desa/dpad/publication/world-economic-situation-and-prospects-2021/)
+
+* [Bitcoin: Um Sistema de Dinheiro Eletrônico Peer-to-Peer por Satoshi Nakamoto](https://bitcoin.org/files/bitcoin-paper/bitcoin_pt_br.pdf)
+
+* [Contagem de Bitcoins atualizada](https://www.buybitcoinworldwide.com/pt-br/quantos-bitcoins-existem/)
+
+* [São Paulo recebe caixa eletrônico de Bitcoin - 2014](http://g1.globo.com/tecnologia/noticia/2014/06/sp-recebe-caixa-eletronico-de-bitcoin.html)
+
+* [Bitcoin tem mais que o dobro de investidores da bolsa no Brasil  ](https://g1.globo.com/economia/educacao-financeira/noticia/bitcoin-ja-tem-mais-que-o-dobro-de-investidores-da-bolsa-no-brasil.ghtml)
+
+* [Organização para Cooperação e Desenvolvimento Econômico (OECD) ](https://www.oecd.org/)
+
+* [Levantamento Cointrader Monitor](https://blog.cointradermonitor.com/400/volumes-das-exchanges-de-marco-de-2021/)
+
+* [You Don’t Need a Diversified Crypto Portfolio to Spread Risk](https://towardsdatascience.com/bitcoin-dominance-5a95f0f3319e)
+
+* [Cryptocurrency Historical Prices](https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory)
